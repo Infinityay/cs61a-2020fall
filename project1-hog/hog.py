@@ -282,6 +282,21 @@ def announce_highest(who, last_score=0, running_high=0):
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+
+    def f(s0, s1):
+        nonlocal last_score, running_high
+        last_score_tmp = last_score
+        running_high_tmp = running_high
+        score = s0 if who == 0 else s1
+        score_inc = score - last_score_tmp
+        if score_inc > running_high_tmp:
+            running_high_tmp = score_inc
+            print(f"{running_high_tmp} point(s)! The most yet for Player {who}")
+        last_score_tmp = score
+        return announce_highest(who, last_score_tmp, running_high_tmp)
+
+    return f
+
     # END PROBLEM 7
 
 

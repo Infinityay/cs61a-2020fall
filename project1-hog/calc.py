@@ -53,7 +53,7 @@ from urllib.request import Request, urlopen
 
 log = logging.getLogger(__name__)
 
-CLIENT_ID = "project1-hog-calc"
+CLIENT_ID = "hog-calc"
 
 # Don't worry, it is ok to share this
 CLIENT_SECRET = "P0MeHIEDgrnTDIJ4sfOsH3rpIUQMoL0"

@@ -1,4 +1,4 @@
-"""Web server for the project1-hog GUI."""
+"""Web server for the hog GUI."""
 import io
 import os
 from contextlib import redirect_stdout
