@@ -34,6 +34,7 @@ def main():
     else:
         raise Exception(body["message"])
 
+
 ##################
 # AUTHENTICATION #
 ################ #
@@ -52,7 +53,7 @@ from urllib.request import Request, urlopen
 
 log = logging.getLogger(__name__)
 
-CLIENT_ID = "hog-calc"
+CLIENT_ID = "project1-hog-calc"
 
 # Don't worry, it is ok to share this
 CLIENT_SECRET = "P0MeHIEDgrnTDIJ4sfOsH3rpIUQMoL0"
@@ -273,6 +274,7 @@ class OAuthSession:
             cur_time = int(time.time())
             self.expires_at = cur_time + expires_in
         return self.access_token
+
 
 if __name__ == '__main__':
     main()

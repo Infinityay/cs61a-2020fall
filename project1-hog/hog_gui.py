@@ -1,4 +1,4 @@
-"""Web server for the hog GUI."""
+"""Web server for the project1-hog GUI."""
 import io
 import os
 from contextlib import redirect_stdout
@@ -73,6 +73,7 @@ def take_turn(prev_rolls, move_history, goal, game_rules):
                 move = move_history[move_cnt]
                 move_cnt += 1
                 return move
+
             return strategy
 
         game_over = False
@@ -108,6 +109,7 @@ def strategy(name, scores):
     }
     return STRATEGIES[name](*scores[::-1])
 
+
 def safe(commentary):
     def new_commentary(*args, **kwargs):
         try:
@@ -116,6 +118,7 @@ def safe(commentary):
             print("Error in commentary function")
             result = commentary
         return safe(result)
+
     return new_commentary
 
 
