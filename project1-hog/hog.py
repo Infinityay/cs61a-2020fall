@@ -339,6 +339,17 @@ def make_averaged(original_function, trials_count=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+
+    def f(*args):
+        res = 0
+
+        for _ in range(trials_count):
+            temp = original_function(*args)
+            res += temp
+        res = res / trials_count
+        return res
+
+    return f
     # END PROBLEM 8
 
 
@@ -347,12 +358,17 @@ def max_scoring_num_rolls(dice=six_sided, trials_count=1000):
     score by calling roll_dice with the provided DICE over TRIALS_COUNT times.
     Assume that the dice always return positive outcomes.
 
-    >>> dice = make_test_dice(1, 6)
+    >>> dice = make_test_dice(3)
     >>> max_scoring_num_rolls(dice)
-    1
+    10
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    roll_dice_num = []
+    averaged_roll_dice = make_averaged(original_function=roll_dice, trials_count=trials_count)
+    for i in range(1, 11):
+        roll_dice_num.append(averaged_roll_dice(i, dice))
+    return roll_dice_num.index(max(roll_dice_num)) + 1
     # END PROBLEM 9
 
 
@@ -377,20 +393,20 @@ def average_win_rate(strategy, baseline=always_roll(6)):
 
 def run_experiments():
     """Run a series of strategy experiments and report results."""
-    if True:  # Change to False when done finding max_scoring_num_rolls
+    if False:  # Change to False when done finding max_scoring_num_rolls
         six_sided_max = max_scoring_num_rolls(six_sided)
         print('Max scoring num rolls for six-sided dice:', six_sided_max)
 
-    if False:  # Change to True to test always_roll(8)
-        print('always_roll(8) win rate:', average_win_rate(always_roll(8)))
+    if True:  # Change to True to test always_roll(4)
+        print('always_roll(4) win rate:', average_win_rate(always_roll(4)))
 
-    if False:  # Change to True to test bacon_strategy
+    if True:  # Change to True to test bacon_strategy
         print('bacon_strategy win rate:', average_win_rate(bacon_strategy))
 
-    if False:  # Change to True to test extra_turn_strategy
+    if True:  # Change to True to test extra_turn_strategy
         print('extra_turn_strategy win rate:', average_win_rate(extra_turn_strategy))
 
-    if False:  # Change to True to test final_strategy
+    if True:  # Change to True to test final_strategy
         print('final_strategy win rate:', average_win_rate(final_strategy))
 
     "*** You may add additional experiments as you wish ***"
@@ -401,17 +417,25 @@ def bacon_strategy(score, opponent_score, cutoff=8, num_rolls=6):
     rolls NUM_ROLLS otherwise.
     """
     # BEGIN PROBLEM 10
-    return 6  # Replace this statement
+
+    return 0 if free_bacon(opponent_score) >= cutoff else num_rolls  # Replace this statement
     # END PROBLEM 10
 
 
 def extra_turn_strategy(score, opponent_score, cutoff=8, num_rolls=6):
-    """This strategy rolls 0 dice when it triggers an extra turn. It also
-    rolls 0 dice if it gives at least CUTOFF points and does not give an extra turn.
-    Otherwise, it rolls NUM_ROLLS.
+    """ A strategy can also take advantage of the Pig Pass and Swine Align rules.
+    The extra turn strategy always rolls 0 if doing so triggers an extra turn.
+    In other cases, it rolls 0 if rolling 0 would give at least cutoff points.
+    Otherwise, the strategy rolls num_rolls.
     """
     # BEGIN PROBLEM 11
-    return 6  # Replace this statement
+    new_score = free_bacon(opponent_score)
+    new_score += score
+
+    if extra_turn(new_score, opponent_score):
+        return 0
+    else:
+        return bacon_strategy(score, opponent_score, cutoff, num_rolls)
     # END PROBLEM 11
 
 
