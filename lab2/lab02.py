@@ -126,15 +126,33 @@ def cycle(f1, f2, f3):
             nonlocal n
             if n == 0:
                 return x
-            if n == 1:
-                return f1(x)
-
-            fs = [f3, f1, f2]
-            temp = f1
-            for i in range(2, n + 1):
-                temp = compose1(fs[i % 3], temp)
-            return temp(x)
+            start = 1
+            while start < n + 1:
+                if (start % 3 == 1):
+                    x = f1(x)
+                elif (start % 3 == 2):
+                    x = f2(x)
+                elif (start % 3 == 0):
+                    x = f3(x)
+                start += 1
+            return x
 
         return g
+
+    # def f(n):
+    #     def g(x):
+    #         nonlocal n
+    #         if n == 0:
+    #             return x
+    #         if n == 1:
+    #             return f1(x)
+    #
+    #         fs = [f3, f1, f2]
+    #         temp = f1
+    #         for i in range(2, n + 1):
+    #             temp = compose1(fs[i % 3], temp)
+    #         return temp(x)
+    #
+    #     return g
 
     return f
