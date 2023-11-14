@@ -1,3 +1,5 @@
+import numpy as numpy
+
 LAB_SOURCE_FILE = __file__
 
 this_file = __file__
@@ -64,6 +66,18 @@ def paths(m, n):
     """
     "*** YOUR CODE HERE ***"
 
+    dp = numpy.ones((m, n), dtype=int)
+    for i in range(1, m):
+        for j in range(1, n):
+            dp[i, j] = dp[i - 1, j] + dp[i, j - 1]
+
+    return dp[-1, -1]
+
+    # if n == 1 or m == 1:
+    #     return 1
+    #
+    # return paths(m - 1, n) + paths(m, n - 1)
+
 
 def max_subseq(n, t):
     """
@@ -110,6 +124,15 @@ def max_subseq(n, t):
     5
     """
     "*** YOUR CODE HERE ***"
+    if t == 0:
+        return 0
+    elif n < 10:
+        return n
+
+    last_num, left_num = n % 10, n // 10
+    use_digit = max_subseq(left_num, t - 1) * 10 + last_num
+    not_use_digit = max_subseq(left_num, t)
+    return max(use_digit, not_use_digit)
 
 
 def add_chars(w1, w2):
@@ -139,3 +162,16 @@ def add_chars(w1, w2):
     True
     """
     "*** YOUR CODE HERE ***"
+
+    def add_chars_helper(w1, w2, add=""):
+        if len(w1) == len(w2):
+            return add
+        elif w1 == "":
+            return add + w2
+
+        if w1[0] == w2[0]:
+            return add_chars_helper(w1[1:], w2[1:], add)
+        else:
+            return add_chars_helper(w1, w2[1:], add + w2[0])
+
+    return add_chars_helper(w1, w2)
