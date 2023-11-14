@@ -34,7 +34,7 @@ def num_eights(x):
         return num_eights(x // 10)
 
 
-def pingpong(n):
+def pingpong(n, i=1, d=1, res=1):
     """Return the nth element of the ping-pong sequence.
 
     >>> pingpong(8)
@@ -68,16 +68,22 @@ def pingpong(n):
     """
     "*** YOUR CODE HERE ***"
     assert n > 0, "n must be greater than zero"
+    if n == i:
+        return res
+    elif 0 == i % 8 or num_eights(i):
+        return pingpong(n, i + 1, -d, res - d)
+    else:
+        return pingpong(n, i + 1, d, res + d)
 
-    def high_order_f(i=1, direction=1, res=1):
-        if n == i:
-            return res
-        elif 0 == i % 8 or num_eights(i):
-            return high_order_f(i + 1, -direction, res - direction)
-        else:
-            return high_order_f(i + 1, direction, res + direction)
-
-    return high_order_f()
+        # def high_order_f(i=1, direction=1, res=1):
+    #     if n == i:
+    #         return res
+    #     elif 0 == i % 8 or num_eights(i):
+    #         return high_order_f(i + 1, -direction, res - direction)
+    #     else:
+    #         return high_order_f(i + 1, direction, res + direction)
+    #
+    # return high_order_f()
 
     # if n == 1:
     #     return 1
